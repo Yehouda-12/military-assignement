@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { AssignmentsService } from './assignments.service';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from '../auth/role.guard';
+import { UpdateAssignmentDto } from './dto/update-assignement.dto';
 
 @Controller('assignments')
 export class AssignmentsController {
@@ -24,5 +25,12 @@ export class AssignmentsController {
   findMine(@Req() req) {
     return this.assignmentsService.findByUser(req.user.sub);
   }
+  @Patch(':id')
+update(
+  @Param('id') id: string,
+  @Body() dto: UpdateAssignmentDto,
+) {
+  return this.assignmentsService.update(+id, dto);
+}
 }
 

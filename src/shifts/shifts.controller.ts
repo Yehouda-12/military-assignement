@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ShiftsService } from './shifts.service';
 import { AuthGuard } from '@nestjs/passport';
 import { RoleGuard } from '../auth/role.guard';
 import { CreateShiftDto } from './dto/create-shift.dto';
+import { UpdateShiftDto } from './dto/update-shift.dto';
 
 @Controller('shifts')
 export class ShiftsController {
@@ -20,5 +21,12 @@ export class ShiftsController {
   @Get()
   getAll() {
     return this.shiftsService.findAll();
+  }
+
+  @Patch(':id')
+  update(
+    @Param('id') id: string,
+    @Body() dto: UpdateShiftDto) {
+    return this.shiftsService.update(+id, dto);
   }
 }

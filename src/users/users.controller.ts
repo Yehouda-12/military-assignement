@@ -1,4 +1,4 @@
-import { UseGuards, Req, Controller, Get } from '@nestjs/common';
+import { UseGuards, Req, Controller, Get, Put, Patch, Param, Body } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 import { RoleGuard } from '../auth/role.guard';
@@ -18,4 +18,12 @@ export class UsersController {
 
     return this.usersService.findByUsername(req.user.username);
   }
+  @UseGuards(AuthGuard('jwt'), new RoleGuard('COMMANDER'))
+  @Patch(':id')
+updateUser(
+  @Param('id') id: number,
+  @Body() dto: any,
+) {
+  return this.usersService.updateUser(id, dto);
+}
 }

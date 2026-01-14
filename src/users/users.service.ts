@@ -15,4 +15,9 @@ export class UsersService {
   create(data: any) {
     return this.userModel.create(data);
   }
+  async updateUser(id: number, dto: any) {
+  return this.userModel.update(dto, {
+    where: { id },
+  });
+}
 }

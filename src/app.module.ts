@@ -11,16 +11,12 @@ import { SequelizeModule } from '@nestjs/sequelize';
   imports: [
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'root',
-      password: 'root',
-      database: 'militarydb',
+   
       autoLoadModels: true,
       synchronize: true,
     
-      
-      
+
+      uri: 'postgresql://neondb_owner:npg_y6cSqJ3DVbtz@ep-calm-river-ahibt1k6-pooler.c-3.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
     }),
     AuthModule,
     UsersModule,

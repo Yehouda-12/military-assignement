@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Assignment } from './assignment.model';
 import { CreateAssignmentDto } from './dto/create-assignment.dto';
+import { UpdateAssignmentDto } from './dto/update-assignement.dto';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class AssignmentsService {
@@ -28,6 +30,21 @@ export class AssignmentsService {
       where: { userId },
       include: ['shift'],
     });
+    
+    
   }
+  
+
+
+async update(id: number, dto: UpdateAssignmentDto) {
+  const assignment = await this.assignmentModel.findByPk(id);
+
+  if (!assignment) {
+    throw new NotFoundException('Assignment not found');
+  }
+
+  return assignment.update(dto);
+}
+
 }
 
